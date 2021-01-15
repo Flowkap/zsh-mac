@@ -1,17 +1,13 @@
-# Notes: 
-# Usage of Powerlevel10k https://github.com/romkatv/powerlevel10k, also refer to https://gist.github.com/kevin-smets/8568070
+export NVM_DIR="$HOME/.nvm"
+  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 ###############################################################################
 # PATH etc.
 ###############################################################################
 
-# NVM
-export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
 # JAVA
-export JAVA_HOME="$(/usr/libexec/java_home -v 15.0.1)"
+export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)"
 export PATH=/Users/fkappes/Library/Python/2.7/bin:~/.local/bin:$PATH
 
 ###############################################################################
@@ -39,7 +35,7 @@ function git_recursive() {
     local d="$1"
     if [ -d "$d" ]; then
         if [ -e "$d/.ignore" ]; then
-        echo -e "\n${HIGHLIGHT}Ignoring $d${NORMAL}"
+            echo -e "\n${HIGHLIGHT}Ignoring $d${NORMAL}"
         else
         cd $d > /dev/null
         if [ -d ".git" ]; then
@@ -47,7 +43,7 @@ function git_recursive() {
             # echo $operation
             git $OPERATION
         else
-            scan *
+            scan * || true
         fi
         cd .. > /dev/null
         fi
@@ -55,9 +51,9 @@ function git_recursive() {
     }
 
     function scan () {
-    for x in $*; do
-        update "$x" operation=$operation
-    done
+        for x in $*; do
+            update "$x" operation=$operation
+        done
     }
 
     echo -e "${HIGHLIGHT}Scanning ${PWD}${NORMAL}"
