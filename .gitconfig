@@ -1,0 +1,6 @@
+[alias]
+	open = "!f() { open $(cat .git/config | grep url | sed -r \"s/.+url =//g\" | sed -r \"s/git@(.*):/http:\\/\\/\\1\\//g\"); }; f"
+	co = checkout
+[user]
+	name = Florian Kappes
+	email = florian.kappes@investify.lu
