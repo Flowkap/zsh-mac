@@ -1,6 +1,22 @@
 [alias]
 	open = "!f() { open $(cat .git/config | grep url | sed -r \"s/.+url =//g\" | sed -r \"s/git@(.*):/http:\\/\\/\\1\\//g\"); }; f"
 	co = checkout
+	d = diff --color-words
+	s = status
+	c = commit
+	icd = icdiff
 [user]
 	name = Florian Kappes
-	email = florian.kappes@investify.lu
+	email = kappesf@gmail.com
+[core]
+	editor = nano
+[diff]
+	tool = icdiff
+[difftool]
+	prompt = false
+[icdiff]
+	options = --highlight --line-numbers
+[pull]
+	rebase = false
+[init]
+	defaultBranch = main
