@@ -69,8 +69,6 @@ function git_recursive() {
     scan *
 }
 
-export GITLAB_TOKEN="H5jUcmnTVT4BkTgxi8nr"
-
 function fail {
   echo $1 >&2
   exit 1
