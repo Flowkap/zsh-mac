@@ -50,7 +50,6 @@ function git_recursive() {
         cd $d > /dev/null
         if [ -d ".git" ]; then
             echo -e "\n${HIGHLIGHT}Updating `pwd`$NORMAL"
-            # echo $operation
             hub $OPERATION
         else
             scan * || true
@@ -70,7 +69,7 @@ function git_recursive() {
     scan *
 }
 
-export GITLAB_TOKEN="changeme"
+export GITLAB_TOKEN="H5jUcmnTVT4BkTgxi8nr"
 
 function fail {
   echo $1 >&2
@@ -124,6 +123,7 @@ alias clean-idea='rm -rf .idea && find . -name "*.iml" -type f -delete'
 # alias sw='telnet towel.blinkenlights.nl'
 # alias shruggie="echo -n '¯\_(ツ)_/¯' | xclip -selection clipboard; xclip -o -selection clipboard; echo -e '\n'"
 
+alias base64='gbase64'
 
 ###############################################################################
 # Kubernetes
@@ -132,12 +132,17 @@ export KUBE_EDITOR="nano"
 
 source <(kubectl completion zsh) &> /dev/null
 alias kc='kubectl'
+alias ku='kubectl'
 alias kt="stern -s 1s -E linkerd-proxy $@"
 
 # alias sub='docker run -it --rm efrecon/mqtt-client sub -h host.docker.internal -p 1883'
 # alias pub='docker run -it --rm efrecon/mqtt-client pub -h host.docker.internal -p 1883'
 
+###############################################################################
+# Investify specific
+###############################################################################
 alias mount-vault="hdiutil attach ~/vault.dmg -mountroot ~"
+alias fetch="cd ~/code/investify; fkappes/code-analysis/fetch.py"
 
 ###############################################################################
 # Powerlevel10k
