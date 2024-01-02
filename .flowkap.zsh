@@ -6,14 +6,22 @@
 export PATH=/Users/fkappes/Library/Python/3.9/bin:~/.local/bin:$PATH
 export PATH=/usr/local/opt/gnu-sed/libexec/gnubin:$PATH
 
-#FNM
-eval "$(fnm env --use-on-cd)"
+# Volta
+export PATH="$HOME/.volta/bin:$PATH"
 
 ## Java version switcher
-alias java8='export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)" ; echo "set default java version: AdoptOpenJDK 8"'
-alias java17='export JAVA_HOME="$(/usr/libexec/java_home -v 17)" ; echo "set default java version: Temurin 17"'
+export PATH=/Library/Java/JavaVirtualMachines/graalvm-ce-java17-22.3.1/Contents/Home/bin:$PATH
+
+alias java8='export JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home" ; echo "set default java version: Zulu8"'
+alias java17='export JAVA_HOME="/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home" ; echo "set default java version: Temurin 17"'
+alias java21='export JAVA_HOME="/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home" ; echo "set default java version: Temurin 21"'
+
 # Standard version (set silently)
-java8 > /dev/null
+java17 > /dev/null
+
+# AI support
+alias ai='gh copilot suggest'
+alias aie='gh copilot explain'
 
 ###############################################################################
 # functions
@@ -69,6 +77,8 @@ function git_recursive() {
     scan *
 }
 
+export GITLAB_TOKEN="changeme"
+
 function fail {
   echo $1 >&2
   exit 1
@@ -103,7 +113,7 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000000
 SAVEHIST=10000000
 
-alias idea='open -a "`ls -dt /Applications/IntelliJ\ IDEA*|head -1`"'
+alias idea='open -a "`ls -dt ~/Applications/IntelliJ\ IDEA*|head -1`"'
 
 # make search up and down work, so partially type and hit up/down to find relevant stuff
 bindkey "^[[A" history-substring-search-up
@@ -117,11 +127,28 @@ alias pull='git pull'
 alias clean-idea='rm -rf .idea && find . -name "*.iml" -type f -delete'
 
 # FUN
-# alias csn='echo H4sIAG9GYVsAA51Yba7sIAj9P6swMRJiDGzB/a/qAmprp0o7l+S9O231HMAjfnw+n0/4txEDQAKUX/KE5X9QBWq3GEJqvyCXnH+Ho1RnC6GjIQXCWn9GvMKpcacQVxWx1t8gb3hmidoHZkgo6ZBs/uTqGlW9bOEzSYpTDKUyAr9Hvod/AUfo8JrpLA/4GtoFNvAuChQnsvkBL8EpAHjI3VpsJeX+8x16KZGqjNILgu5/b0rv8HPNMvop1McQ4Pib3utQswoIRSN/l6Ck0smio1eyiXj4Fh3oUmMMFXMjMKL4LkXEU2oX2TiMITDcgnzBMBHMo3wPJ6ZUSZR/5XhRA7OTmW8OrQWl4pXjkaJ86/PynLIMVBRoS5rUbS3eBZGYSumTPj1x0CoKjCmeky/hMr1AIwVPHGk7zdTlYkMic/FoLk+IHAqryuVffCAovMJOgWowbQm/KVleGN7sWg1Q1YEn0S6ngQyAJOeiWV0BbP2ilkhjlih7ifVZyqpaaF4UIVi6Tdck7rCwxFwUH4qIIGuD3v+BZRWKfjgSQ2hZSg00ckBRBBJw+zwGz6fBBYvh5fjlzoCl/pzb80iGS7PKGAzgcjTjadTH66bro5dfGPc0asTJHLnOlFITK1eWdJYTweOhE/0igC9LMD/FmZZe8eSFnuN3o1j1f84T9BzcMagu0bm+bQPK9qIkqcQBOWphmZhOT13BrWrMFxEPUBJvuujCmckpEx7RStdwbVKXHYfRO6K43DpcFHYbsauNlAgQefVtxVMvZVJNaz2dTzDpZYqokjOPNkS2lEw2pi0mKIY+XswZCfsVekdzCeBCGCFRmV5cFkXYCtzf3H1xnQTTgnoVU9oxuTxqGNaRbRE22XuzIXaZ7s3Xax7uc3fxoazZaNlzyfQiouHp4CIav3b5WDFBrsXbLd+s7bJla1ho7+VGET9sPk9rlXX3cafyn6mym7rqlb1faKAvTKuCPGxf9n7ZvR++peVOU83ZaD/Bh1M0UiKwL0y79DkHk4fJq6vhsWrTYy+HaD37DuvYGlY81tl9tfQWQZdnrLpYxSM6Q9o75q3rHhOOJhq7BFae8uDuIDzpWRCyJTYmxW9dtrp72B47TJY52bYi1wx2iCwPPfzTixsUVQkaEZj0Aksqnq9V//Tt9YQWRdTwOGVW2flTHe83p/ZaTp/QRpi1wqQ2U1Rz7TAZ+um0nflq7xcA7GUCsMKkj2gjHpfXU/WcirWPQNK/7aqs1bbG1b7EmSvYhDZxot7A2LqVzUm6c51qOnpr42iERkeXuCDsuWqLe2T2powRyyIsOwmFg4qZaeK4U/Xqa2EtLwPUAb1iaP62PMfO1+M+MmjGo1VeRYU9g3bQvl+rR70o1ePToLYfYAKpPURgjgddbeJBe6G5sqvE206vttuQ0F3h7hW3/dBXg9bBPmC/Hs8d5L6F7HElCzWFMdG5jgp6NuiPJrIBbO/SrqTZteJAOBufjtIphTEOTx7XcSetwWnfMUQdWCGjHY8mj1sYYdJANjITaTGhy2B+/gAOXKA2KRkAAA== | base64 -d | gunzip && sleep 5s && clear'
-# alias sw='telnet towel.blinkenlights.nl'
-# alias shruggie="echo -n '¯\_(ツ)_/¯' | xclip -selection clipboard; xclip -o -selection clipboard; echo -e '\n'"
+alias csn='clear && echo H4sIAG9GYVsAA51Yba7sIAj9P6swMRJiDGzB/a/qAmprp0o7l+S9O231HMAjfnw+n0/4txEDQAKUX/KE5X9QBWq3GEJqvyCXnH+Ho1RnC6GjIQXCWn9GvMKpcacQVxWx1t8gb3hmidoHZkgo6ZBs/uTqGlW9bOEzSYpTDKUyAr9Hvod/AUfo8JrpLA/4GtoFNvAuChQnsvkBL8EpAHjI3VpsJeX+8x16KZGqjNILgu5/b0rv8HPNMvop1McQ4Pib3utQswoIRSN/l6Ck0smio1eyiXj4Fh3oUmMMFXMjMKL4LkXEU2oX2TiMITDcgnzBMBHMo3wPJ6ZUSZR/5XhRA7OTmW8OrQWl4pXjkaJ86/PynLIMVBRoS5rUbS3eBZGYSumTPj1x0CoKjCmeky/hMr1AIwVPHGk7zdTlYkMic/FoLk+IHAqryuVffCAovMJOgWowbQm/KVleGN7sWg1Q1YEn0S6ngQyAJOeiWV0BbP2ilkhjlih7ifVZyqpaaF4UIVi6Tdck7rCwxFwUH4qIIGuD3v+BZRWKfjgSQ2hZSg00ckBRBBJw+zwGz6fBBYvh5fjlzoCl/pzb80iGS7PKGAzgcjTjadTH66bro5dfGPc0asTJHLnOlFITK1eWdJYTweOhE/0igC9LMD/FmZZe8eSFnuN3o1j1f84T9BzcMagu0bm+bQPK9qIkqcQBOWphmZhOT13BrWrMFxEPUBJvuujCmckpEx7RStdwbVKXHYfRO6K43DpcFHYbsauNlAgQefVtxVMvZVJNaz2dTzDpZYqokjOPNkS2lEw2pi0mKIY+XswZCfsVekdzCeBCGCFRmV5cFkXYCtzf3H1xnQTTgnoVU9oxuTxqGNaRbRE22XuzIXaZ7s3Xax7uc3fxoazZaNlzyfQiouHp4CIav3b5WDFBrsXbLd+s7bJla1ho7+VGET9sPk9rlXX3cafyn6mym7rqlb1faKAvTKuCPGxf9n7ZvR++peVOU83ZaD/Bh1M0UiKwL0y79DkHk4fJq6vhsWrTYy+HaD37DuvYGlY81tl9tfQWQZdnrLpYxSM6Q9o75q3rHhOOJhq7BFae8uDuIDzpWRCyJTYmxW9dtrp72B47TJY52bYi1wx2iCwPPfzTixsUVQkaEZj0Aksqnq9V//Tt9YQWRdTwOGVW2flTHe83p/ZaTp/QRpi1wqQ2U1Rz7TAZ+um0nflq7xcA7GUCsMKkj2gjHpfXU/WcirWPQNK/7aqs1bbG1b7EmSvYhDZxot7A2LqVzUm6c51qOnpr42iERkeXuCDsuWqLe2T2powRyyIsOwmFg4qZaeK4U/Xqa2EtLwPUAb1iaP62PMfO1+M+MmjGo1VeRYU9g3bQvl+rR70o1ePToLYfYAKpPURgjgddbeJBe6G5sqvE206vttuQ0F3h7hW3/dBXg9bBPmC/Hs8d5L6F7HElCzWFMdG5jgp6NuiPJrIBbO/SrqTZteJAOBufjtIphTEOTx7XcSetwWnfMUQdWCGjHY8mj1sYYdJANjITaTGhy2B+/gAOXKA2KRkAAA== | base64 -d | gunzip && sleep 5 && clear'
+alias sw='telnet towel.blinkenlights.nl'
+alias shruggie="echo -n '¯\_(ツ)_/¯\n'"
+# | xclip -selection clipboard; xclip -o -selection clipboard; echo -e '\n'"
 
 alias base64='gbase64'
+alias cb="clear && printf '\e[3J'"
+
+alias python="python3"
+
+###############################################################################
+# Investify
+###############################################################################
+alias templating='cd ~/code/investify/investify-platform/cloud-deployment-platform'
+alias policies='cd ~/code/investify/gitlab-pages/application-partner-data/common/policies'
+alias robo='cd ~/code/investify/investify-applications/local-env'
+alias comp='cd ~/code/investify/investify-components'
+alias um='cd ~/code/investify/investify-components/user-management'
+alias as='cd ~/code/investify/investify-components/advisory-service'
+alias hybrid='cd ~/code/investify/investify-components/hybrid-onboarding'
+alias multi='cd ~/code/investify/investify-platform/multi-web-client-platform'
+alias migrations='cd ~/code/investify/investify-applications/python-utilities/migration-utilities/investment-import/'
 
 ###############################################################################
 # Kubernetes
@@ -133,8 +160,15 @@ alias kc='kubectl'
 alias ku='kubectl'
 alias kt="stern -s 1s -E linkerd-proxy $@"
 
-# alias sub='docker run -it --rm efrecon/mqtt-client sub -h host.docker.internal -p 1883'
-# alias pub='docker run -it --rm efrecon/mqtt-client pub -h host.docker.internal -p 1883'
+alias sub='docker run -it --rm efrecon/mqtt-client sub -h host.docker.internal -p 1883'
+alias pub='docker run -it --rm efrecon/mqtt-client pub -h host.docker.internal -p 1883'
+
+###############################################################################
+# Docker
+###############################################################################
+
+alias d='docker'
+alias dl='docker logs'
 
 ###############################################################################
 # Investify specific
